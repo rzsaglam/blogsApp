@@ -1,26 +1,30 @@
 import React, { useState } from "react";
-import { View, TextInput, Button } from "react-native";
+import { View, TextInput } from "react-native";
 
 import styles from "./BlogForm.style";
 
-const BlogForm = ({ blogs, setBlogs, setBlogToggle }) => {
+import Button from "../../common/Button";
+
+const BlogForm = ({ blogs }) => {
+  const [blogData, setBlogData] = useState(...blogs);
   const [title, setTitle] = useState("");
   const [blogText, setBlogText] = useState("");
   const [author, setAuthor] = useState("");
 
   const initialBlog = {
-    id: Math.floor(Math.random() * 100),
-    title: title,
-    blogText: blogText,
-    author: author,
+    id: blogs.length,
+    title: title.trim(),
+    blogText: blogText.trim(),
+    author: author.trim(),
   };
 
   const handlePress = () => {
-    setBlogs([...blogs, initialBlog]);
-    setBlogToggle(true);
-    setTitle("");
-    setBlogText("");
-    setAuthor("");
+    if (title && blogText && author !== "") {
+      setBlogData([...blogs, initialBlog]);
+      setTitle("");
+      setBlogText("");
+      setAuthor("");
+    }
   };
 
   return (
